@@ -1,11 +1,22 @@
 import React from 'react';
 
 import PostListItem from '../post-list-item';
-import { ListGroup} from 'reactstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import styled from 'styled-components';
+
+
+const AppListGroup = styled(ListGroup)`
+    margin-top: 50px;
+`;
+
+const ListGroupItemCustom = styled(ListGroupItem)`
+    padding: 20px 35px 10px 35px;
+    margin-top: 10px;
+`;
 
 
 
-const PostLIst = ({posts, onDelete}) => {
+const PostLIst = ({posts, onDelete,  onToggleImportant, onToggleLiked}) => {  // onToggleImportant, onToggleLiked,
 
     // console.log(posts);
     const elem = posts.filter((elm) => {
@@ -17,18 +28,20 @@ const PostLIst = ({posts, onDelete}) => {
         const {id, ...itemProps} = item;
 
         return (
-            <li key={id} className='list-group-item'>
+            <ListGroupItemCustom key={id} /* className='list-group-item' */>
                 <PostListItem 
                     {...itemProps}
-                    onDelete={() => onDelete(id)}/>
-            </li>
+                    onDelete={() => onDelete(id)}
+                    onToggleImportant={() => onToggleImportant(id, 'important')}
+                    onToggleLiked={() => onToggleLiked(id, 'like')}/>
+            </ListGroupItemCustom>
         )
     });
 
     return (
-        <ListGroup className="app-list">
+        <AppListGroup>
           {elements}
-        </ListGroup>
+        </AppListGroup>
     )
 }
 
